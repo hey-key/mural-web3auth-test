@@ -38,18 +38,21 @@ function App() {
 
 	const [account, setAccount] = useState("");
 	const [balance, setBalance] = useState<string | null>(null);
-	const [provider, setProvider] = useState<any>(null)
+	const [provider, setProvider] = useState<any>(null);
 
 	const handleConnect = async () => {
 		try {
-			const provider = await web3auth.connectTo(WALLET_ADAPTERS.OPENLOGIN, {
-				loginProvider: "jwt",
-				extraLoginOptions: {
-					domain: import.meta.env.VITE_AUTH0_DOMAIN,
-					verifierIdField: "sub", // For SMS & Email Passwordless, use "name" as verifierIdField
-				},
-			});
-			setProvider(provider)
+			const provider = await web3auth.connectTo(
+				WALLET_ADAPTERS.OPENLOGIN,
+				{
+					loginProvider: "jwt",
+					extraLoginOptions: {
+						domain: import.meta.env.VITE_AUTH0_DOMAIN,
+						verifierIdField: "sub", // For SMS & Email Passwordless, use "name" as verifierIdField
+					},
+				}
+			);
+			setProvider(provider);
 			const user = await web3auth.getUserInfo();
 			if (user) {
 				console.log({ user });
@@ -82,14 +85,6 @@ function App() {
 		console.log(userAccounts);
 	};
 
-	useEffect(() => {
-	  if(provider){
-		getAccounts()
-	  }
-	}, [provider])
-	
-
-
 	const getBalance = async () => {
 		if (!provider) {
 			console.log("provider not initialized yet");
@@ -101,7 +96,6 @@ function App() {
 		setBalance(web3.utils.fromWei(balance));
 		console.log(web3.utils.fromWei(balance));
 	};
-
 
 	const sendTransaction = async () => {
 		if (!provider) {
@@ -118,6 +112,12 @@ function App() {
 		});
 		console.log({ txRes: txRes });
 	};
+
+	useEffect(() => {
+		if (provider) {
+			getAccounts();
+		}
+	}, [provider]);
 
 	return (
 		<div className="App">
