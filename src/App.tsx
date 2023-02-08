@@ -12,7 +12,7 @@ const web3auth = new Web3AuthCore({
 	web3AuthNetwork: "testnet",
 	chainConfig: {
 		chainNamespace: CHAIN_NAMESPACES.EIP155, // SOLANA, OTHER
-		chainId: "5",
+		chainId: "0x5",
 	},
 });
 
@@ -115,7 +115,6 @@ function App() {
 			from: accounts[0],
 			to: accounts[0],
 			value: web3.utils.toWei("0.0001"),
-			chainId: 5, // change it to your specific chain id.
 		});
 		console.log({ txRes: txRes });
 	};
